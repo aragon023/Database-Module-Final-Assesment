@@ -5,12 +5,31 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from flask_migrate import Migrate
 
+# Flask Admin Setup
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_wtf import CSRFProtect
+from flask_wtf.csrf import generate_csrf
+from wtforms import StringField, TextAreaField, SelectField
+from flask_wtf import FlaskForm
+from wtforms.validators import DataRequired
+from markupsafe import Markup
+
+
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 
-# Prefer DATABASE_URL (Render), fallback to LOCAL_DATABASE_URL (local dev)
+if os.getenv("FLASK_ENV") == "production" or os.getenv("RENDER"):
+    app.config.update(
+        SESSION_COOKIE_SECURE=True,
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE="Lax",
+    )
+
+# Prefer DATABASE_URL (Render), fallback to LOCAL_DATABASE_URL (Local)
 db_url = os.getenv("DATABASE_URL") or os.getenv("LOCAL_DATABASE_URL")
 app.config["SQLALCHEMY_DATABASE_URI"] = db_url
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_pre_ping": True}
@@ -23,7 +42,62 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 # Import models after db is created
-from models import Article, Comment
+from models import Article, Comment, User
+
+# ---- Auth & CSRF setup ----
+login_manager = LoginManager(app)
+login_manager.login_view = "login"
+
+csrf = CSRFProtect(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+@app.context_processor
+def inject_csrf():
+    return dict(csrf_token=generate_csrf)
+
+
+# Flask-Admin setup
+class SecureModelView(ModelView):
+    # gate admin behind login; keep public site untouched
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.is_admin 
+    def inaccessible_callback(self, name, **kwargs):
+        from flask import redirect, url_for
+        return redirect(url_for("login"))
+
+class ArticleAdmin(SecureModelView):
+    # show useful columns + a tiny image preview (URL-based)
+    column_list = ["title", "tag", "published_on", "author", "slug", "image_preview"]
+    column_searchable_list = ["title", "summary", "content", "slug", "tag", "author"]
+    column_filters = ["tag", "published_on"]
+    form_excluded_columns = ["comments"]  # relationship
+
+    # simple preview column (doesn't alter your public templates)
+    def _image_preview(view, context, model, name):
+        if not model.image:
+            return ""
+        src = model.image
+        # works with both full URLs and static-relative paths
+        if not src.startswith("http"):
+            from flask import url_for
+            src = url_for("static", filename=src)
+        return Markup(f'<img src="{src}" style="height:40px;object-fit:cover;border-radius:4px;">')
+    column_formatters = {"image_preview": _image_preview}
+
+    # auto-slug if empty
+    def on_model_change(self, form, model, is_created):
+        import re
+        if (not getattr(model, "slug", None)) and getattr(model, "title", None):
+            s = re.sub(r"[^\w\s-]", "", model.title).strip().lower()
+            model.slug = re.sub(r"[-\s]+", "-", s)
+
+admin = Admin(app, name="Admin", template_mode="bootstrap4", url="/admin")
+admin.add_view(ArticleAdmin(Article, db.session))
+admin.add_view(SecureModelView(Comment, db.session))
+admin.add_view(SecureModelView(User, db.session))
 
 
 # ----------------- ROUTES -----------------
