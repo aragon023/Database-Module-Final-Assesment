@@ -6,8 +6,9 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 
 # --- Admin / Auth / Forms ---
-from flask_admin import Admin, menu
+from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.menu import MenuLink  
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf import CSRFProtect, FlaskForm
 from flask_wtf.csrf import generate_csrf
@@ -89,7 +90,8 @@ admin = Admin(app, name="Admin", template_mode="bootstrap4", url="/admin")
 admin.add_view(ArticleAdmin(Article, db.session))
 admin.add_view(SecureModelView(Comment, db.session))
 admin.add_view(SecureModelView(User, db.session))
-admin.add_link(menu.MenuLink(name="Logout", category="", url="/admin/logout"))
+admin.add_link(MenuLink(name="Logout", category="", url="/admin/logout"))
+
 
 # --- Routes ---
 @app.route("/")
@@ -151,6 +153,15 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("login"))
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("500.html"), 500
+
 
 # --- Entrypoint ---
 if __name__ == "__main__":
