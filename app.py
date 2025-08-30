@@ -3,6 +3,7 @@ import random
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
+from flask_migrate import Migrate
 
 # Load environment variables
 load_dotenv()
@@ -17,6 +18,9 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev")
 
 # Initialize DB
 db = SQLAlchemy(app)
+
+# Enable Alembic/Flask-Migrate
+migrate = Migrate(app, db)
 
 # Import models after db is created
 from models import Article, Comment
