@@ -1,23 +1,33 @@
-from articles_data import db, Article
-from app import app
 from datetime import datetime
 import re
 
-# Function to create slug from title
-def slugify(title):
-    slug = re.sub(r'[^\w\s-]', '', title).strip().lower()
-    slug = re.sub(r'[-\s]+', '-', slug)
-    return slug
+from app import app, db
+from models import Article, Comment  # Comment imported for future use to add seed comments
 
+
+def slugify(title: str) -> str:
+    slug = re.sub(r"[^\w\s-]", "", title).strip().lower()
+    return re.sub(r"[-\s]+", "-", slug)
+
+def to_date(value):
+    if not value:
+        return None
+    if isinstance(value, datetime):
+        return value.date()
+
+    return datetime.strptime(value, "%Y-%m-%d").date()
+
+
+# --- Articles Data ---
 articles_data = [
     {
-        'title': 'Unlocking Growth: Applying the 10 Types of Innovation Across Industries',
-        'tag': 'INNOVATION',
-        'summary': 'The Ten Types of Innovation framework by Doblin offers a holistic approach to innovation by identifying ten areas where companies can differentiate and create value—not just through products, but also through processes, business models, customer engagement, and more.',
-        'image': 'images/home/articles/article_1_people_brainstorming.jpg',
-        'author': 'Mauricio Aragon',
-        'published_on': datetime(2025, 5, 1),
-        'content': '''
+        "title": "Unlocking Growth: Applying the 10 Types of Innovation Across Industries",
+        "tag": "INNOVATION",
+        "summary": "The Ten Types of Innovation framework by Doblin offers a holistic approach to innovation by identifying ten areas where companies can differentiate and create value—not just through products, but also through processes, business models, customer engagement, and more.",
+        "image": "images/home/articles/article_1_people_brainstorming.jpg",
+        "author": "Mauricio Aragon",
+        "published_on": datetime(2025, 8, 30),
+        "content": '''
             <p>In a world where innovation is often equated with flashy tech or sleek design, many organizations overlook the broader range of ways they can stand out and create value. 
             This is where Doblin's Ten Types of Innovation framework proves invaluable. Developed by the Doblin Group (now part of Deloitte), this model provides a comprehensive lens through which companies can assess and improve their innovation strategies—not just in products, but across their entire business model.
             Rather than focusing solely on product innovation, the framework categorizes innovation into three broad areas: Configuration, Offering, and Experience—with ten specific types across those categories.</p>
@@ -37,16 +47,16 @@ articles_data = [
             </blockquote>
 
             <p>By understanding and applying multiple types of innovation, companies can build defensible strategies that outperform their competition.</p>
-        '''
+        ''',
     },
     {
-        'title': '10 Best AI Tools for Creative Work',
-        'tag': 'TECHNOLOGY',
-        'summary': 'Artificial intelligence is rapidly transforming the way creative professionals work—boosting productivity, expanding artistic possibilities, and removing tedious tasks from the process.',
-        'image': 'images/home/articles/article_3_AI_Tools.jpg',
-        'author': 'Mauricio Aragon',
-        'published_on': datetime(2025, 5, 1),
-        'content': '''
+        "title": "10 Best AI Tools for Creative Work",
+        "tag": "TECHNOLOGY",
+        "summary": "Artificial intelligence is rapidly transforming the way creative professionals work—boosting productivity, expanding artistic possibilities, and removing tedious tasks from the process.",
+        "image": "images/home/articles/article_3_AI_Tools.jpg",
+        "author": "Mauricio Aragon",
+        "published_on": datetime(2025, 8, 30),
+        "content": '''
             <p>Artificial intelligence is rapidly transforming the way creative professionals work—boosting productivity, expanding artistic possibilities, and removing tedious tasks from the process. 
             From generating visuals to enhancing writing and editing workflows, today's AI tools can help designers, writers, and creators take their projects to new levels.</p>
 
@@ -87,16 +97,16 @@ articles_data = [
             </blockquote>
 
             <p>As creative work evolves, integrating the right AI tools can enhance not just what we make—but how we think about making it. Whether you're a solo creator or part of a larger team, experimenting with these tools can unlock new levels of efficiency and inspiration.</p>
-        '''
+        ''',
     },
     {
-        'title': 'Account Based Marketing: Time for a Strategic Approach',
-        'tag': 'MARKETING STRATEGY',
-        'summary': 'Account Based Marketing (ABM) has evolved from a buzzword to a strategic pillar in modern B2B marketing. It offers a focused, efficient approach to engage high-value accounts with precision.',
-        'image': 'images/home/articles/article_2_people_office.jpg',
-        'author': 'Mauricio Aragon',
-        'published_on': datetime(2025, 5, 1),
-        'content': '''
+        "title": "Account Based Marketing: Time for a Strategic Approach",
+        "tag": "MARKETING STRATEGY",
+        "summary": "Account Based Marketing (ABM) has evolved from a buzzword to a strategic pillar in modern B2B marketing. It offers a focused, efficient approach to engage high-value accounts with precision.",
+        "image": "images/home/articles/article_2_people_office.jpg",
+        "author": "Mauricio Aragon",
+        "published_on": datetime(2025, 8, 30),
+        "content": '''
             <p>Account Based Marketing (ABM) has evolved from a buzzword to a strategic pillar in modern B2B marketing. 
             As organizations seek greater ROI, more meaningful customer relationships, and alignment between sales and marketing, ABM offers a focused, efficient approach to engage high-value accounts with precision.</p>
 
@@ -122,28 +132,34 @@ articles_data = [
             </blockquote>
 
             <p>As buyer journeys become more complex and decision-making teams expand, adopting a strategic ABM approach can help organizations cut through the noise, speak directly to what matters, and drive sustainable growth.</p>
-        '''
-    }
+        ''',
+    },
 ]
 
-with app.app_context():
-    for data in articles_data:
-        slug = slugify(data['title'])
-        existing = Article.query.filter_by(slug=slug).first()
-        if not existing:
-            a = Article(
-                title=data['title'],
-                slug=slug,
-                tag=data['tag'],
-                summary=data['summary'],
-                image=data['image'],
-                author=data['author'],
-                published_on=data['published_on'],
-                content=data['content']
-            )
-            db.session.add(a)
-            print(f" Added: {data['title']}")
-        else:
-            print(f" Skipped (already exists): {data['title']}")
-    db.session.commit()
-    print("Done")
+def upsert_article(data: dict):
+    slug = slugify(data["title"])
+    article = Article.query.filter_by(slug=slug).first()
+    if not article:
+        article = Article(slug=slug)
+        db.session.add(article)
+
+    article.title = data["title"]
+    article.tag = data["tag"]
+    article.summary = data["summary"]
+    article.image = data["image"]
+    article.author = data.get("author") or "Mauricio Aragon"
+    article.published_on = to_date(data.get("published_on"))
+    article.content = data["content"]
+    return article
+
+
+def main():
+    with app.app_context():
+        for data in articles_data:
+            upsert_article(data)
+        db.session.commit()
+        print(f"Seeded or updated {len(articles_data)} article(s).")
+
+
+if __name__ == "__main__":
+    main()
