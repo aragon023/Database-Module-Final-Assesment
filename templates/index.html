@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block title %}Home - My Portfolio{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  
+{% endblock %}
+
+{% block content %}
+
+      <!-- Intro Section -->
+     <section class="intro parallax-section">
+        <div class="parallax-background"></div>
+
+        <div class="intro-text">
+            <h1>Innovation + Business + Technology</h1>
+            <p>Welcome to Holisk — a curated showcase of my work at the intersection of innovation, business and technology.</p>
+            <p>With a passion for turning ideas into meaningful experiences, I share projects, insights, and content that explore how design can drive transformation across industries.
+            Whether you're here to view my portfolio, read about emerging trends, or collaborate on new ventures, this site is a place for inspiration and practical thinking.
+            </p>
+        </div>
+      </section>
+
+
+      <!-- Logo Section -->
+      <section class="logo-carousel">
+        <div class="carousel-track">
+          <img src="{{ url_for('static', filename='images/home/html_logo.jpg') }}" alt="html logo" loading="lazy" />
+          <img src="{{ url_for('static', filename='images/home/javascript_logo.jpg') }}" alt="javascript logo" loading="lazy" />
+          <img src="{{ url_for('static', filename='images/home/logo_visual studio.jpg') }}" alt="visual studio code logo" loading="lazy" />
+          <img src="{{ url_for('static', filename='images/home/photoshop_logo.jpg') }}" alt="adobe photoshop logo" loading="lazy" />
+          <img src="{{ url_for('static', filename='images/home/illustrator_logo.jpg') }}" alt="adobe illustrator logo" loading="lazy" />
+          <img src="{{ url_for('static', filename='images/home/hubspot_logo.jpg') }}" alt="hubspot CRM logo" loading="lazy" />
+          <img src="{{ url_for('static', filename='images/home/3dstudio_logo.jpg') }}" alt="3d studio max logo" loading="lazy" />
+          <img src="{{ url_for('static', filename='images/home/asana_logo.jpg') }}" alt="asana logo" loading="lazy" />
+          <img src="{{ url_for('static', filename='images/home/lightroom_logo.jpg') }}" alt="adobe lightroom logo" loading="lazy" />
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="about">
+        <h2>
+          <span class="material-symbols-outlined icon about">person</span>
+          About Me
+        </h2>
+
+        <div class="about-body">
+          <div class="about-text">
+            <p>
+              I'm a multidisciplinary professional with a background in industrial design, marketing, and current studies in Full Stack Development. 
+              My career path has taken me through advertising, teaching, consultancy, and now customer success management at HubSpot, where I support high-growth companies across EMEA in leveraging CRM, automation, and AI tools to scale effectively. 
+            </p>
+
+            <p>
+              This diverse experience has shaped a deep understanding of how design, technology, marketing, and business intersect to drive innovation. 
+              Through this website, I explore and share practical ideas, tools, and reflections aimed at helping others build better products, stronger strategies, and more meaningful customer experiences.
+            </p> 
+
+            <a href="{{ url_for('about') }}" class="cta-btn">Know More</a>
+          </div>
+
+          <div class="about-image">
+             <img src="{{ url_for('static', filename='images/home/mauricio_aragon.jpg') }}" alt="Mauricio Aragon standing in a colorful set" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Articles Section -->
+      <section class="homepage-articles">
+        <h2>
+          <span class="material-symbols-outlined icon article">article</span>
+          Featured Articles
+        </h2>
+        <p>
+          Big ideas, latest technologies, and sharp strategy — this blog is all about what's shaping the future. 
+          I write about the intersections of innovation, design, technology, and business to explore how creative thinking and strategic moves can drive real impact. 
+          If you're into bold moves and fresh perspectives, you're in the right place.    
+        </p>
+        <div class="featured-articles">
+          {% for article in featured_articles %}
+          <div class="card">
+            <img src="{{ url_for('static', filename=article.image) }}" alt="{{ article.title }}">
+            <div class="card-content">
+              <span class="tag">{{ article.tag }}</span>
+              <h3>{{ article.title }}</h3>
+              <p>{{ article.summary }}</p>
+              <a href="{{ url_for('article_detail', slug=article.slug) }}" class="btn-small">Read</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects" class="projects">
+        <h2>
+          <span class="material-symbols-outlined icon work">work</span>
+        Projects
+        </h2>
+        <p>
+        Want to check some creative projects? Here are some of my favorite works showcasing my approach to design, innovation, and problem-solving. Each link will take you to my Behance portfolio for more amazing projects and detailed case studies.
+        <br>
+        </p>
+        <div class="projects-grid">
+          <div class="project-card">
+            <img src="{{ url_for('static', filename='images/projects/alessi_pluma.jpg') }}" alt="Alessi Pluma project image" />
+            <div class="project-content">
+              <div class="project-header">
+                <h4>Alessi Pluma</h4>
+                <span class="tag">Product Design</span>
+              </div>
+              <p class="project-description">
+                The historical Italian Design Factory Alessi invited international creatives to rethink their product as an act of love. The aim was to interpret the love token in a contemporary way, designing a new object that celebrated this universal feeling. 
+                <br>
+                <br>
+                Pluma wanted to create an emotional bond between two people by connecting them with the most essential part of them...their language.
+                The project was inspired by the old quill, a tool that has been used for centuries to write letters and poems.
+                In a time when technology has put aside tradition, being inspired in the old quill idea brought a sense of nostalgia and reinforced the message of a deep connection.
+                <br>
+                <br>
+                Pluma was selected as one of the ten award winners from a pool of 1,186 international participants.
+              </p>
+              <a href="https://www.behance.net/gallery/51437983/Alessi-in-Love-Pluma" target="_blank" rel="noopener noreferrer">
+            <button class="project-btn">View Project</button>
+            </a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <img src="{{ url_for('static', filename='images/projects/jack_daniels_poster.jpg') }}" alt="jack_daniels_poster" />
+            <div class="project-content">
+              <div class="project-header">
+                <h4>Jack Daniels Drink Responsibly</h4>
+                <span class="tag">Graphic Design</span>
+              </div>
+              <p class="project-description">
+                Jack Daniel's, the iconic Tennessee whiskey brand, invited creatives to design a poster that would promote responsible drinking while celebrating the brand's rich heritage.
+                <br>
+                <br>
+                The poster won two competitions - Best Design in the Idearama Design Competition in 2013 and Silver in the Eucol Mupi National Awards in 2014
+                <br>
+                <br>
+                The design features a guitar coming out of a bottle, which is a symbol of the brand's connection to music and rock culture.
+                It was done using a combination of modeling and rendering in 3D Studio Max + Vray and digital illustration techniques in Photoshop, creating a visually striking and memorable piece that captures the essence of Jack Daniel's.
+                </p>
+              <a href="https://www.behance.net/gallery/51386545/Jack-Daniels-Bus-Stop-Billboard" target="_blank" rel="noopener noreferrer">
+            <button class="project-btn">View Project</button>
+            </a>
+            </div>
+          </div>      
+
+          <div class="project-card">
+            <img src="{{ url_for('static', filename='images/projects/virgin_media.jpg') }}" alt="virgin_media" />
+            <div class="project-content">
+              <div class="project-header">
+                <h4>Virgin Media Ireland | Press Launch</h4>
+                <span class="tag">Events</span>
+              </div>
+              <p class="project-description">
+                October 2015 marked the exciting emergence of Virgin Media into the Irish Market. 
+                <br>
+                <br> 
+                The team was tasked with all aspects of the launch which culminated in a one day event in the RDS which was kicked off by Virgin's very own Richard Branson bursting into the room on board a Virgin articulated truck!
+                <br>
+                <br> 
+                Three separate events were encompassed within the day which included a Press specific launch followed by a private event in which Irish Entrepreneurs were offered a once in a lifetime opportunity to ask Richard Branson for advice with the day being capped off with a Virgin Employee celebration party.
+                <br>
+                </p>
+              <a href="https://www.behance.net/gallery/52403421/Virgin-Media-Launch-Ireland" target="_blank" rel="noopener noreferrer">
+            <button class="project-btn">View Project</button>
+            </a>
+            </div>
+          </div>     
+
+          <div class="project-card">
+            <img src="{{ url_for('static', filename='images/projects/la_licorera.jpg') }}" alt="la_licorera" />
+            <div class="project-content">
+              <div class="project-header">
+                <h4>La Licorera Regional Dance Venue</h4>
+                <span class="tag">Architecture</span>
+              </div>
+              <p class="project-description">
+              The Dance and Choreography Center of Valle del Cauca, LA LICORERA, is a space for national and international connection that positions the city of Cali and the Valle del Cauca as an epicenter of dance. 
+              <br>
+              <br> 
+              It is imagined as place for creation and dialogue across genres, generations, and forms of knowledge, all coming together to envision the future of Colombian dance, faithful to its roots, its past and present, with a forward-looking perspective.
+              <br>
+              <br> 
+              The old warehouses from the Industria de Licores (regional distillery) serves as the main location for the venue. 
+              <br>
+              <br> 
+              The whole complex repurposed a series of six buildings: a multipurpose exhibition and showroom warehouse, a dance and training building, a multifunctional theatre with a seating capacity of 700 , a housing complex for artists, a restaurant and a regional dance museum.
+                </p>
+            <a href="https://www.behance.net/gallery/57528353/LA-LICORERA-Dance-Centre" target="_blank" rel="noopener noreferrer">
+            <button class="project-btn">View Project</button>
+            </a>
+
+            </div>
+          </div>     
+        </div>
+      </section>
+
+  <!-- Tools -->
+      <section class="tools">
+        <h2>Ready to start innovating?</h2>
+        <p>Check some of our practical tools and frameworks.</p>
+        <a href="{{ url_for('tools') }}" class="cta-btn">Explore</a>
+        <div class="tools-image">
+          <img src="{{ url_for('static', filename='images/home/toolkit.jpg') }}" alt="toolkit">
+        </div>
+        <br>
+        <br>
+      </section>
+{% endblock %}
+
+  <!-- Page-specific JS -->
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/carousel.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/articles.js') }}" defer></script>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Contact | Holisk | Innovation + Business + Technology{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+{% endblock %}
+
+{% block content %}
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1>Let's Collaborate</h1>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <p class="contact-description">
+        I work with startups, creative teams, and established brands on projects related to design, innovation, strategy, and digital experiences.
+        Whether it's a one-off consultation or a long-term partnership, I'm open to meaningful collaborations that make a difference.
+      </p>
+
+      <form id="contact-form" novalidate>
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" name="name" required />
+          <span class="error-message" id="name-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" required />
+          <span class="error-message" id="email-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Your Message *</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <span class="error-message" id="message-error"></span>
+        </div>
+
+        <button type="submit" class="cta-btn form-submit">Send</button>
+      </form>
+    </section>
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,171 @@
+
+/* --- Responsive Styles --- */
+
+/* Media Query ≤ 960px */
+@media (max-width: 960px) {
+
+
+ .articles-grid {
+    grid-template-columns: 1fr;
+  }
+    
+  .featured-articles {
+    grid-template-columns: 1fr;
+  }
+  
+}
+
+@media (max-width: 760px) {
+  .hamburger {
+    display: flex !important; 
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 2000; 
+    position: relative;
+  }
+
+  .hamburger .material-symbols-outlined {
+    font-size: 32px;
+    color: var(--color-white); /* Adjust for dark or light background */
+  }
+
+/* Hamburger Button  */
+.main-nav {
+    display: none;
+    position: absolute;
+    top: 80px; 
+    right: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    z-index: 1000;
+  }
+
+  .main-nav.active {
+    display: flex;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .main-nav ul li {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+
+  .intro,
+  .about,
+  .projects,
+  .tools {
+    padding: 2rem 1rem;
+  }
+
+       .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+    .contact-section {
+    padding: 0.5rem;
+    margin: 2rem 1rem;
+  }
+
+  .contact-description {
+    font-size: 0.95rem;
+  }
+
+ form {
+    align-items: center;
+  }
+
+  form .form-group {
+    max-width: 100%;
+    text-align:center;
+  }
+
+  form input,
+  form textarea {
+  max-width: 300px;
+  text-align: left;
+  margin: 0 auto;
+  }
+
+  .footer-elements {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links ul {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .footer-additional {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* ≤ 450px: Ultra-thin screen tweaks */
+@media (max-width: 450px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  h1, h2 {
+    font-size: 1.4rem;
+  }
+
+    .nav-container {
+    flex-wrap: wrap; 
+    justify-content: center;
+  }
+
+  .logo img {
+    max-width: 150px; 
+    height: auto;
+    
+  }
+
+  .nav-cta-btn {
+    width: fit-content;
+    margin: 0 auto; 
+  }
+
+  .nav-links {
+    font-size: 0.3px;
+
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .project-description {
+    font-size: 0.85rem;
+  }
+
+  .tools-image img {
+    max-height: 180px;
+  }
+
+  form input,
+  form textarea {
+  max-width: 300px;
+  }
+
+
+}
+
+
+

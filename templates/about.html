@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+{% endblock %}
+
+{% block content %}
+<section id="about-intro" class="about-intro">
+  <h1>
+    <span class="material-symbols-outlined icon about" aria-hidden="true">person</span>
+    About Me
+  </h1>
+
+  <div class="about-intro-body">
+    <div class="about-intro-text">
+      <p>Starting with a foundation in industrial design and marketing, I've worked across multiple disciplines: advertising, education, consultancy, and customer success.</p>
+      <p>Why Holisk? The name reflects a core principle that has guided my career: a deep curiosity not just for how things work, but for how they can work better. My background in product design taught me the value of approaching challenges holistically—understanding the broader context, identifying root causes, and designing solutions that are both effective and sustainable. This mindset has helped me ensure that every solution is informed by a full view of the system it operates within.</p>
+      <p>Whether it's identifying friction in customer journeys, designing more efficient systems, or advising clients on scalable strategies, I approach each challenge with structured creativity—breaking down issues, mapping stakeholder needs, and crafting solutions that are both technically sound and strategically aligned. This wide-ranging experience has sharpened my ability to see across disciplines and identify patterns that lead to meaningful, sustainable outcomes. This is exactly where visibility, feasibility and desirability meet.</p>
+    </div>
+
+    <div class="about-intro-image">
+      <img src="{{ url_for('static', filename='images/about/mauricio_aragon_about.jpg') }}" alt="Mauricio Aragon portrait">
+    </div>
+  </div>
+</section>
+
+<section class="two-column-section">
+  <div class="left-column">
+    <h2>
+      <span class="material-symbols-outlined icon triada" aria-hidden="true">circles_ext</span>
+      The Triad
+    </h2>
+
+    <p>At the core of my professional path is a belief in the transformative synergy of these three disciplines. I see design as the engine that understands people, technology as the platform that enables solutions, and business as the structure that sustains them. When these three forces are aligned, they empower companies to create truly meaningful solutions—ones that scale impact, elevate customer experience, and drive sustainable growth. That is true innovation.</p>
+    <p>My transition into full-stack development is a natural extension of this triad. By gaining deeper technical skills, I aim to better connect strategic thinking with technical execution, bridging the gap between concept. Whether working on customer experience strategy or complex technical projects, I always return to the intersection of business needs, technological possibilities, and user realities.</p>
+    <p>Ultimately, my goal is to help shape products and strategies that make a meaningful difference. I believe that innovation isn't just about being cutting-edge—it's about being relevant, valuable, and inclusive. When business, technology, and innovation move together, they don't just solve problems—they create entirely new possibilities.</p>
+  </div>
+
+  <div class="right-column">
+    <div class="top-box">
+      <img src="{{ url_for('static', filename='images/about/layers2.png') }}" alt="Illustrative diagram" class="top-box-image">
+    </div>
+
+    <div class="bottom-box">
+      <button class="arrow-button left" onclick="prevContent()" aria-label="Previous content">
+        <span class="material-symbols-outlined icon arrow" aria-hidden="true">chevron_left</span>
+      </button>
+      <button class="arrow-button right" onclick="nextContent()" aria-label="Next content">
+        <span class="material-symbols-outlined icon arrow" aria-hidden="true">chevron_right</span>
+      </button>
+
+      <div class="content-slider">
+        <div class="content-item active">
+          <h4>Design</h4>
+          <p>Design is the bridge between human needs and purposeful solutions. It brings empathy into the innovation process by focusing on how people interact with products, services, and systems.</p>
+          <p>Through a thoughtful, iterative approach, design uncovers insights, shapes user experiences, and drives the creation of solutions that are not only functional but also intuitive and meaningful.</p>
+        </div>
+        <div class="content-item">
+          <h4>Technology</h4>
+          <p>Technology is the engine of possibility. It empowers us to scale ideas, automate complexity, and unlock new forms of interaction and value creation.</p>
+          <p>When guided by design and anchored in business objectives, technology enables bold experimentation, continuous improvement, and the building of systems that adapt to a changing world.</p>
+        </div>
+        <div class="content-item">
+          <h4>Business</h4>
+          <p>Business transforms ideas into sustainable value. It ensures that innovations are viable, scalable, and aligned with market realities.</p>
+          <p>By understanding customer behaviour, market dynamics, and operational models, business thinking brings clarity and structure to innovation efforts, turning creativity into impact and strategy into execution.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="companies">
+  <div class="companies-text">
+    <p>Over the years, I've had the opportunity to collaborate with a diverse range of companies—each one bringing unique challenges and valuable experiences that have helped shape my perspective on innovation, strategy, and execution.</p>
+  </div>
+
+  <div class="logo-grid">
+    <img src="{{ url_for('static', filename='images/about/hubspot_horizontal_logo.png') }}" alt="HubSpot Logo">
+    <img src="{{ url_for('static', filename='images/about/icesi_logo.png') }}" alt="Icesi University Logo">
+    <img src="{{ url_for('static', filename='images/about/ministryofculture_logo.png') }}" alt="Ministry of Culture Logo">
+    <img src="{{ url_for('static', filename='images/about/polymath_ventures_logo.png') }}" alt="Polymath Ventures Logo">
+    <img src="{{ url_for('static', filename='images/about/yr_logo.png') }}" alt="Y&R Logo">
+    <img src="{{ url_for('static', filename='images/about/pluto_logo.png') }}" alt="Pluto Logo">
+  </div>
+
+    <a href="{{ url_for('projects') }}" class="cta-btn">View Projects</a>
+</section>
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/about.js') }}" defer></script>
+{% endblock %}

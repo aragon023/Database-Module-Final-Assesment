@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Tools | Holisk | Innovation + Business + Technology{% endblock %}
+
+<!-- Stylesheets -->
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+{% endblock %}
+
+{% block content %}
+<!-- Banner Section -->
+<section class="banner">
+  <img src="{{ url_for('static', filename='images/home/toolkit.jpg') }}" alt="Banner Image">
+</section>
+
+<!-- Intro Tools -->
+<section class="intro-tools">
+  <h1>
+    <span class="material-symbols-outlined icon tools">build</span>
+    Toolkit
+  </h1>
+  <p>
+    Welcome to my curated collection of interactive digital cards designed to support creative thinking, problem solving, and strategic exploration. 
+    Each card features a practical framework drawn from the fields of innovation, business, and design—ranging from classic models to contemporary methods.
+  </p>
+  <p>
+    The cards are not just informative—they're built to be applied directly to your work. From design thinking canvases to business model tools, 
+    the Toolkit is a practical resource for individuals and teams looking to approach problems more holistically, creatively, and effectively.
+  </p>
+</section>
+
+<!-- Tools Grid -->
+<div class="tools-container">
+  <div class="filter-bar">
+    <button onclick="filterCards('All')">All</button>
+    <button onclick="filterCards('Empathy')">Empathy</button>
+    <button onclick="filterCards('Strategy')">Strategy</button>
+    <button onclick="filterCards('Planning')">Planning</button>
+    <button onclick="filterCards('Problem Solving')">Problem Solving</button>
+  </div>
+
+  <div class="grid" id="toolGrid"></div>
+
+  <!-- Modal -->
+  <div id="toolModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <img id="modalImage" src="" alt="" />
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+      <div id="modalTags"></div>
+      <div id="modalExtra"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+  <!-- Page-specific JS -->
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/tools.js') }}" defer></script>
+{% endblock %}

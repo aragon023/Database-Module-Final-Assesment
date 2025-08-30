@@ -1,0 +1,195 @@
+/* Colour Scheme */
+:root {
+  /* Neutral Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-grey-light: #f5f5f5;
+  --color-grey-medium: #6c6c6c;
+  --color-grey-dark: #2d2d2d;
+
+  /* Yellow and Orange Shades */
+  --color-yellow-light: #ffb703; 
+  --color-orange: #fb8500;       
+
+  /* Blue Shades */
+  --color-blue-light: #8ecae6;   
+  --color-blue: #009bdd;     
+  --color-dark-blue: #023047;    
+}
+
+/* Global styles */
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: 1rem;
+  background: linear-gradient(to bottom, #141414, #404040);
+  color: var(--color-black);
+}
+
+.body-container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* Navigation Bar*/
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--color-black);
+  max-width: 1140px;
+  margin: auto;
+}
+
+.nav-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  height: 120px;
+  box-sizing: border-box;
+}
+
+.second-nav-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  max-width: 200px;
+  height: auto;
+  display: block;
+}
+
+.main-nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 20px;
+}
+
+.main-nav a {
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.main-nav a:hover {
+  color: var(--color-yellow-light);
+}
+
+
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+}
+
+/* CTA Button in Nav */
+.nav-cta-btn {
+  display: inline-block;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  padding: 0.25rem 2rem;
+  border: none;
+  border-radius: 15px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.nav-cta-btn:hover {
+  background-color: var(--color-yellow-light);
+}
+
+/* CTA Buttons*/
+
+.cta-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 24px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: var(--color-orange);
+}
+
+/* Footer*/
+.footer {
+  background: var(--color-black);
+  color: var(--color-white);
+  padding: 2rem 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 1140px;
+  margin: auto;
+}
+
+.footer-elements {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1140px;
+  margin: 0 auto;
+  flex-wrap: wrap; 
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-grey-medium);
+}
+
+.footer-logo img {
+  width: 150px;
+  height: auto;
+}
+
+.footer-links ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 1rem;
+  color: var(--color-white);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--color-yellow-light);
+}
+
+.footer-additional {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.footer-contact,
+.footer-legal {
+  margin: 0.5rem 0;
+}
+
+.footer-contact p,
+.footer-legal p {
+  margin: 0;
+}
+

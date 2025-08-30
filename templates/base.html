@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Descriptions -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Innovation, Technology, Design and Business Strategy">
+    <meta name="keywords" content="Portfolio, Innovation, Technology, Design, Business, Strategy">
+    <meta name="author" content="Mauricio Aragon">
+    <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+
+    <!-- Page Title -->
+    <title>{% block title %}Home | Holisk | Innovation + Business + Technology{% endblock %}</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    
+    <!-- Page-specific Stylesheets -->
+    {% block extra_css %}{% endblock %}
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Navigation -->
+<header>
+  <div class="nav-container">
+    <div class="logo">
+      <a href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='images/holisk_logo_negative.webp') }}" alt="Holisk Logo" class="logo-img">
+      </a>
+    </div>
+
+    <div class="second-nav-container">
+    <nav class="main-nav" id="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('projects') }}">Projects</a></li>
+        <li><a href="{{ url_for('tools') }}">Tools</a></li>
+        <li><a href="{{ url_for('articles') }}">Articles</a></li>
+      </ul>
+    </nav>
+
+      <!-- Hamburger Menu -->
+    <button class="hamburger" id="hamburger-button">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+
+                <!-- CTA Button -->
+    <a href="{{ url_for('contact') }}" class="nav-cta-btn">Contact</a>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Page Content Wrapper -->
+  <div class="body-container">
+      <main>
+          {% block content %}{% endblock %}
+      </main>
+  </div>
+
+  <!-- Footer -->
+<footer class="footer">
+  <div class="footer-elements">
+    <div class="footer-logo">
+      <a href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='images/holisk_logo_negative.webp') }}" alt="Holisk Logo">
+      </a>
+    </div>
+
+    <div class="footer-links">
+      <ul>
+        <li><a href="{{ url_for('about') }}">About Me</a></li>
+        <li><a href="{{ url_for('articles') }}">Articles</a></li>
+        <li><a href="{{ url_for('projects') }}">Projects</a></li>
+        <li><a href="{{ url_for('tools') }}">Tools</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      </ul>
+    </div>
+  </div> 
+
+<div class="footer-additional">
+  <div class="footer-contact">
+    <p>contact@holisk.com</p>
+  </div>
+
+  <div class="footer-legal">
+    <p>&copy; 2025 All Rights Reserved</p>
+  </div>
+</div>
+</footer>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/navigation.js') }}" defer></script>
+
+  <!-- Page-specific JS -->
+  {% block extra_scripts %}{% endblock %}
+
+</body>
+</html>

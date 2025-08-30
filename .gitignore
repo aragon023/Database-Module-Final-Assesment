@@ -1,0 +1,14 @@
+# Virtual environment
+venv/
+
+# Bytecode / caches
+__pycache__/
+*.py[cod]
+
+# Instance folder 
+instance/
+*.sqlite
+
+# Environment variables
+.env
+

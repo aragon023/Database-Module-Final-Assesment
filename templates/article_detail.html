@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} | Holisk{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/individual_articles.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="article-page">
+  <article class="article-content">
+    <img src="{{ url_for('static', filename=article.image) }}" alt="{{ article.title }}" class="article-hero" />
+
+    <!-- Tag -->
+    <span class="tag">{{ article.tag }}</span>
+    <h1>{{ article.title }}</h1>
+    <p class="article-meta">By {{ article.author }} • {{ article.published_on.strftime('%B %d, %Y') }}</p>
+
+    <!-- Article Body -->
+    <div class="article-body">
+      {{ article.content | safe }}
+    </div>
+  </article>
+
+  <!-- Comments Section -->
+  <section class="comments-section">
+    <h2>Leave a Comment</h2>
+
+    <!-- Comment Form -->
+    <form method="POST">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="content">Comment:</label>
+        <textarea name="content" id="content" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="cta-btn">Post Comment</button>
+    </form>
+
+    <hr>
+
+    <!-- Display Comments -->
+    <h3>Comments</h3>
+    {% if comments %}
+      <ul class="comment-list">
+        {% for comment in comments %}
+          <li class="comment">
+            <strong>{{ comment.name }}</strong> <span class="comment-date">({{ comment.created_at.strftime('%B %d, %Y') }})</span>
+            <p>{{ comment.content }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No comments yet. Be the first to leave one!</p>
+    {% endif %}
+  </section>
+</section>
+{% endblock %}

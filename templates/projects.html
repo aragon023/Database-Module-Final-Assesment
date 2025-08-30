@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+{% endblock %}
+
+{% block content %}
+<section class="banner">
+  <img src="{{ url_for('static', filename='images/projects/banner2_projects.jpg') }}" alt="Banner Image">
+</section>
+
+<section class="projects-intro">
+  <h1>
+    <span class="material-symbols-outlined icon projects" aria-hidden="true">work</span>
+    Projects
+  </h1>
+  <p>
+    This is a showcase of a multidisciplinary range of creative work. You will find references to graphic and industrial design, 3D animation, and shopper marketing campaigns.
+  </p>
+  <p>
+    The projects are a testament to my passion for design and innovation, collaborating with amazing brands and teams in design, advertising, and creative agencies. Each project reflects a unique approach to problem-solving, whether through visual storytelling, product design, or immersive experiences. Check out more about each project directly in my Behance portfolio.
+  </p>
+</section>
+
+<section id="projects" class="projects">
+  <div class="projects-grid">
+    {% for project in projects %}
+    <div class="project-card">
+      <img src="{{ url_for('static', filename=project.image) }}" alt="{{ project.alt }}">
+      <div class="project-content">
+        <div class="project-header">
+          <h4>{{ project.title }}</h4>
+          <span class="tag">{{ project.tag }}</span>
+        </div>
+        <p class="project-description">
+          {{ project.description }}
+        </p>
+        <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer">
+          <button class="project-btn">View Project</button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
