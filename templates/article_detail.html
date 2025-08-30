@@ -14,7 +14,8 @@
     <!-- Tag -->
     <span class="tag">{{ article.tag }}</span>
     <h1>{{ article.title }}</h1>
-    <p class="article-meta">By {{ article.author }} • {{ article.published_on.strftime('%B %d, %Y') }}</p>
+    <p class="article-meta">By {{ article.author }} • {% if article.published_on %}{{ article.published_on.strftime('%B %d, %Y') }}{% else %}Unpublished{% endif %}</p>
+
 
     <!-- Article Body -->
     <div class="article-body">
@@ -27,7 +28,7 @@
     <h2>Leave a Comment</h2>
 
     <!-- Comment Form -->
-    <form method="POST">
+    <form method="POST" action="{{ url_for('article_detail', slug=article.slug) }}">
       <div class="form-group">
         <label for="name">Name:</label>
         <input type="text" name="name" id="name" required>
@@ -47,7 +48,8 @@
       <ul class="comment-list">
         {% for comment in comments %}
           <li class="comment">
-            <strong>{{ comment.name }}</strong> <span class="comment-date">({{ comment.created_at.strftime('%B %d, %Y') }})</span>
+            <strong>{{ comment.name }}</strong>
+            <span class="comment-date">({% if comment.created_at %}{{ comment.created_at.strftime('%B %d, %Y') }}{% else %}Just now{% endif %})</span>
             <p>{{ comment.content }}</p>
           </li>
         {% endfor %}
