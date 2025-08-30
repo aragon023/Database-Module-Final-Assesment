@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from flask_migrate import Migrate
 
 # Flask Admin Setup
-from flask_admin import Admin
+from flask_admin import Admin, menu
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf import CSRFProtect
@@ -103,6 +103,7 @@ admin = Admin(app, name="Admin", template_mode="bootstrap4", url="/admin")
 admin.add_view(ArticleAdmin(Article, db.session))
 admin.add_view(SecureModelView(Comment, db.session))
 admin.add_view(SecureModelView(User, db.session))
+admin.add_link(menu.MenuLink(name="Logout", category="", url="/admin/logout"))
 
 
 # ----------------- ROUTES -----------------
