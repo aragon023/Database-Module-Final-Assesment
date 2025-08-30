@@ -58,6 +58,11 @@ def load_user(user_id):
 def inject_csrf():
     return dict(csrf_token=generate_csrf)
 
+# ---- Login Form ----
+class LoginForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired()])
+    password = StringField("Password", validators=[DataRequired()])  # template will render as password field
+
 
 # Flask-Admin setup
 class SecureModelView(ModelView):
@@ -157,6 +162,26 @@ def article_detail(slug):
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
+# ---- Admin Auth Routes ----
+@app.route("/admin/login", methods=["GET","POST"])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("admin.index"))  # go to Flask-Admin dashboard
+    form = LoginForm()
+    if form.validate_on_submit():
+        u = User.query.filter_by(email=form.email.data.strip()).first()
+        if u and u.check_password(form.password.data):
+            login_user(u)
+            return redirect(url_for("admin.index"))
+        return render_template("admin/login.html", form=form, error="Invalid credentials")
+    return render_template("admin/login.html", form=form)
+
+@app.route("/admin/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
 
 
 # ------------- ENTRYPOINT -----------------
