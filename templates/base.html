@@ -48,6 +48,14 @@
         <li><a href="{{ url_for('projects') }}">Projects</a></li>
         <li><a href="{{ url_for('tools') }}">Tools</a></li>
         <li><a href="{{ url_for('articles') }}">Articles</a></li>
+        {% if not current_user.is_authenticated %}
+        <li class="nav-login">
+          <a href="{{ url_for('login') }}" aria-label="Log in">
+            <span class="material-symbols-outlined" aria-hidden="true">login</span>
+            <span class="login-text">Login</span>
+          </a>
+        </li>
+        {% endif %}
       </ul>
     </nav>
 
@@ -82,7 +90,6 @@
           {% block content %}{% endblock %}
       </main>
   </div>
-
  
 
   <!-- Footer -->

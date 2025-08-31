@@ -61,6 +61,11 @@
     padding: 1rem 0;
   }
 
+  /* Show login text label on small screens for clarity */
+  .nav-login .login-text {
+    display: inline;
+  }
+
 
   .intro,
   .about,

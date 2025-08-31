@@ -83,6 +83,23 @@ header {
   color: var(--color-yellow-light);
 }
 
+/* Login item (compact on desktop) */
+.nav-login a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-login .material-symbols-outlined {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* Hide text by default to reduce clutter on wider screens */
+.nav-login .login-text {
+  display: none;
+}
+
 
 
 /* Hamburger Menu */
