@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -10,7 +10,7 @@ class Article(db.Model):
     summary = db.Column(db.Text, nullable=False)
     image = db.Column(db.String(200), nullable=False)
     author = db.Column(db.String(100), default="Mauricio Aragon")
-    published_on = db.Column(db.Date, default=datetime.utcnow)
+    published_on = db.Column(db.Date, default=date.today)
     content = db.Column(db.Text, nullable=False)
 
 class Comment(db.Model):
