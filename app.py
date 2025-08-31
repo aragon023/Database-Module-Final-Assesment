@@ -88,6 +88,7 @@ class ArticleAdmin(SecureModelView):
             model.slug = re.sub(r"[-\s]+", "-", s)
 
 admin = Admin(app, name="Admin", template_mode="bootstrap4", url="/admin")
+csrf.exempt(admin.blueprint)
 admin.add_view(ArticleAdmin(Article, db.session))
 admin.add_view(SecureModelView(Comment, db.session))
 admin.add_view(SecureModelView(User, db.session))
