@@ -88,7 +88,12 @@ class ArticleAdmin(SecureModelView):
             model.slug = re.sub(r"[-\s]+", "-", s)
 
 admin = Admin(app, name="Admin", template_mode="bootstrap4", url="/admin")
-csrf.exempt(admin.blueprint)
+
+# Exempt Flask-Admin blueprint from CSRF (its forms don't include Flask-WTF tokens)
+admin_bp = app.blueprints.get("admin")  # blueprint name is "admin" by default
+if admin_bp:
+    csrf.exempt(admin_bp)
+
 admin.add_view(ArticleAdmin(Article, db.session))
 admin.add_view(SecureModelView(Comment, db.session))
 admin.add_view(SecureModelView(User, db.session))
