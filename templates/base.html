@@ -65,10 +65,25 @@
 
   <!-- Page Content Wrapper -->
   <div class="body-container">
+
+ {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, msg in messages %}
+        <div class="alert {{ 'alert-success' if category == 'success' else 'alert-error' }}">
+          {{ msg }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
       <main>
           {% block content %}{% endblock %}
       </main>
   </div>
+
+ 
 
   <!-- Footer -->
 <footer class="footer">

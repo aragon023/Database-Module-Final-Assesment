@@ -124,6 +124,11 @@ header {
   background-color: var(--color-orange);
 }
 
+
+/*Flash Container*/
+.flash-container { max-width: 960px; margin: 1rem auto; }
+
+
 /* Footer*/
 .footer {
   background: var(--color-black);
