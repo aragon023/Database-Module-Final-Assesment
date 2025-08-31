@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login | Holisk{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+  <div class="hero-content">
+    <h1 class="auth-title">Admin Login</h1>
+    <p class="auth-sub">Sign in to manage articles and comments.</p>
+  </div>
+
+  <div class="auth-wrapper">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="alert {{ 'alert-success' if category == 'success' else 'alert-error' }}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% if error %}
+      <div class="alert alert-error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('login') }}" novalidate>
+      {{ form.csrf_token }}
+
+      <div class="form-row">
+        <label for="email">Email</label>
+        {{ form.email(id="email", placeholder="you@example.com") }}
+      </div>
+
+      <div class="form-row">
+        <label for="password">Password</label>
+        {{ form.password(id="password") }}
+      </div>
+
+      <button type="submit" class="btn-primary">Sign in</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

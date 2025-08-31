@@ -1,0 +1,63 @@
+/* Login Page Styles */
+
+.auth-wrapper {
+  max-width: 520px;
+  margin: 4rem auto;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.07);
+  background: #fff;
+}
+
+.auth-title {
+  margin-bottom: .5rem;
+}
+
+.auth-sub {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  margin-bottom: 1rem;
+}
+
+.form-row label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: .4rem;
+}
+
+.form-row input {
+  width: 100%;
+  padding: .75rem 1rem;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: .75rem 1.25rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: #222;
+  color: #fff;
+  font-weight: 600;
+}
+
+.alert {
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.alert-error {
+  background: #ffe9e9;
+  color: #b20000;
+}
+
+.alert-success {
+  background: #eaf9ee;
+  color: #0a7a2a;
+}
