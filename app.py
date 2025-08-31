@@ -1,9 +1,10 @@
 # --- Core imports ---
 import os, random
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
+
 
 # --- Admin / Auth / Forms ---
 from flask_admin import Admin
@@ -130,8 +131,20 @@ def article_detail(slug):
     comments = Comment.query.filter_by(article_id=article.id).order_by(Comment.created_at.desc()).all()
     return render_template("article_detail.html", article=article, comments=comments)
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        message = request.form.get("message")
+
+        # For now, just log/print — later adjust to send email or save to DB
+        app.logger.info(f"Contact form submitted: {name} ({email}) - {message}")
+
+        flash("Thank you! Your message has been sent.", "success")
+
+        return redirect(url_for("contact"))
+
     return render_template("contact.html")
 
 # --- Admin auth routes ---

@@ -20,7 +20,8 @@
         Whether it's a one-off consultation or a long-term partnership, I'm open to meaningful collaborations that make a difference.
       </p>
 
-      <form id="contact-form" novalidate>
+    <form id="contact-form" method="POST" action="{{ url_for('contact') }}" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div class="form-group">
           <label for="name">Full Name *</label>
           <input type="text" id="name" name="name" required />
