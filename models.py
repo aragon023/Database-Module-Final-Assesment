@@ -1,5 +1,5 @@
-from datetime import date
 from app import db
+from datetime import datetime, date
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class Article(db.Model):
