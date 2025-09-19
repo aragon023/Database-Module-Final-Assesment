@@ -155,15 +155,18 @@ def article_detail(slug):
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
-        name = request.form.get("name")
-        email = request.form.get("email")
-        message = request.form.get("message")
+        name = request.form.get("name", "").strip()
+        email = request.form.get("email", "").strip()
+        message = request.form.get("message", "").strip()
 
-        # For now, just log/print — later adjust to send email or save to DB
-        app.logger.info(f"Contact form submitted: {name} ({email}) - {message}")
+        if not (name and email and message):
+            flash("Please fill in all required fields.", "error")
+            return redirect(url_for("contact"))
+
+        db.session.add(ContactSubmission(name=name, email=email, message=message))
+        db.session.commit()
 
         flash("Thank you! Your message has been sent.", "success")
-
         return redirect(url_for("contact"))
 
     return render_template("contact.html")
