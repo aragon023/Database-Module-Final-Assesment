@@ -39,3 +39,19 @@ class User(db.Model):
     @property
     def is_anonymous(self): return False
     def get_id(self): return str(self.id)
+
+    from datetime import datetime
+from app import db
+
+    # form submission
+class ContactSubmission(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    status = db.Column(db.String(20), default="new", nullable=False)  
+
+    def __repr__(self):
+        return f"<ContactSubmission {self.email} @ {self.created_at:%Y-%m-%d}>"
+

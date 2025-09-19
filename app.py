@@ -39,7 +39,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 # --- Import models (AFTER db is ready) ---
-from models import Article, Comment, User
+from models import Article, Comment, User, ContactSubmission
 
 # --- Auth & CSRF setup ---
 login_manager = LoginManager(app)
@@ -60,12 +60,23 @@ class LoginForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
 
+
 # --- Flask-Admin setup ---
 class SecureModelView(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_admin
+    
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for("login"))
+
+# --- Admin Model Views ---
+class ContactSubmissionAdmin(SecureModelView):
+    can_create = False  # submissions come from the site
+    column_list = ["created_at", "name", "email", "status"]
+    column_searchable_list = ["name", "email", "message"]
+    column_filters = ["status", "created_at"]
+    form_excluded_columns = ["created_at"]
+
 
 class ArticleAdmin(SecureModelView):
     column_list = ["title", "tag", "published_on", "author", "slug", "image_preview"]
@@ -74,11 +85,13 @@ class ArticleAdmin(SecureModelView):
     form_excluded_columns = ["comments"]
 
     def _image_preview(view, context, model, name):
-        if not model.image: return ""
+        if not model.image: 
+            return ""
         src = model.image
         if not src.startswith("http"):
             src = url_for("static", filename=src)
         return Markup(f'<img src="{src}" style="height:40px;object-fit:cover;border-radius:4px;">')
+    
     column_formatters = {"image_preview": _image_preview}
 
     def on_model_change(self, form, model, is_created):
@@ -87,10 +100,11 @@ class ArticleAdmin(SecureModelView):
             s = re.sub(r"[^\w\s-]", "", model.title).strip().lower()
             model.slug = re.sub(r"[-\s]+", "-", s)
 
+# --- Admin Setup ---
 admin = Admin(app, name="Admin", template_mode="bootstrap4", url="/admin")
 
-# Exempt Flask-Admin blueprint from CSRF (its forms don't include Flask-WTF tokens)
-admin_bp = app.blueprints.get("admin")  # blueprint name is "admin" by default
+# Exempt Flask-Admin blueprint from CSRF
+admin_bp = app.blueprints.get("admin")
 if admin_bp:
     csrf.exempt(admin_bp)
 
@@ -98,6 +112,7 @@ admin.add_view(ArticleAdmin(Article, db.session))
 admin.add_view(SecureModelView(Comment, db.session))
 admin.add_view(SecureModelView(User, db.session))
 admin.add_link(MenuLink(name="Logout", category="", url="/admin/logout"))
+admin.add_view(ContactSubmissionAdmin(ContactSubmission, db.session))
 
 
 # --- Routes ---
