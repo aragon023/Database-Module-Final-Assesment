@@ -155,19 +155,32 @@ def article_detail(slug):
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
-        name = request.form.get("name", "").strip()
-        email = request.form.get("email", "").strip()
-        message = request.form.get("message", "").strip()
+        try:
+            name = request.form.get("name", "").strip()
+            email = request.form.get("email", "").strip()
+            message = request.form.get("message", "").strip()
+            
+            print(f"Received form data - Name: {name}, Email: {email}")  # Debug log
+            
+            if not (name and email and message):
+                print("Missing required fields")  # Debug log
+                flash("Please fill in all required fields.", "error")
+                return redirect(url_for("contact"))
 
-        if not (name and email and message):
-            flash("Please fill in all required fields.", "error")
+            submission = ContactSubmission(name=name, email=email, message=message)
+            db.session.add(submission)
+            print("About to commit to database")  # Debug log
+            db.session.commit()
+            print("Successfully committed to database")  # Debug log
+
+            flash("Thank you! Your message has been sent.", "success")
             return redirect(url_for("contact"))
-
-        db.session.add(ContactSubmission(name=name, email=email, message=message))
-        db.session.commit()
-
-        flash("Thank you! Your message has been sent.", "success")
-        return redirect(url_for("contact"))
+            
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error submitting contact form: {str(e)}")  # Debug log
+            flash("An error occurred. Please try again.", "error")
+            return redirect(url_for("contact"))
 
     return render_template("contact.html")
 

@@ -1,40 +1,23 @@
 document.getElementById("contact-form").addEventListener("submit", function (e) {
-  e.preventDefault();
+  // For debugging
+  console.log("Form submission attempted");
 
   let isValid = true;
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
 
-  // Get form fields
-  const name = document.getElementById("name");
-  const email = document.getElementById("email");
-  const message = document.getElementById("message");
+  // Log form values
+  console.log("Form values:", { name, email, message });
 
-  // Reset errors
-  document.getElementById("name-error").textContent = "";
-  document.getElementById("email-error").textContent = "";
-  document.getElementById("message-error").textContent = "";
-
-  // Validate name
-  if (name.value.trim() === "") {
-    document.getElementById("name-error").textContent = "Name is required.";
+  if (!name || !email || !message) {
     isValid = false;
   }
 
-  // Validate email
-  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-  if (!email.value.match(emailPattern)) {
-    document.getElementById("email-error").textContent = "Enter a valid email.";
-    isValid = false;
-  }
-
-  // Validate message
-  if (message.value.trim().length < 10) {
-    document.getElementById("message-error").textContent = "Please enter a message (10+ characters).";
-    isValid = false;
-  }
-
-  // If all valid, simulate submission
-  if (isValid) {
-    alert("Thanks for reaching out! I'll get back to you shortly.");
-    document.getElementById("contact-form").reset();
+  if (!isValid) {
+    e.preventDefault(); // Only prevent submission if validation fails
+    console.log("Form validation failed");
+  } else {
+    console.log("Form validation passed, submitting...");
   }
 });
