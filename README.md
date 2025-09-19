@@ -9,6 +9,10 @@ https://github.com/aragon023/Python-Module-Final-Assesment.git
 >>Deployment in Render (link to page)
 https://python-module-final-assesment.onrender.com
 
+For accesing Admin Panel
+User: admin@example.com 
+Password: NewStrongPass123!
+
 Planning Analysis Sheet
 
 Website Goal
@@ -41,16 +45,63 @@ Python is used to manage both the server-side application and data handling, mak
 
 Framework: Flask project (app.py as the entry point, templates/ folder for Jinja2 HTML templates, and static/ for CSS/JS/images).
 Flask powers the project’s backend. It is used to define routes (@app.route) that serve each page (e.g., Home, About, Projects, Articles, Tools, and Contact). 
-Through Flask's templating system (Jinja2), Python dynamically renders HTML templates, allowing content such as articles and featured sections to be fetched from the database and displayed on the site. 
-This ensures that updates or new content are automatically reflected on the website without modifying static HTML files.
+Through Flask's templating system (Jinja2), Python dynamically renders HTML templates, allowing content such as articles and featured sections to be fetched from the database and displayed on the site. This ensures that updates or new content are automatically reflected on the website without modifying static HTML files.
+
+Key upgrades compared to the previous Python Project:
+Database: migrated from SQLite to PostgreSQL (hosted on Render)
+ORM: still managed with SQLAlchemy + Flask-Migrate (Alembic) for migrations
+Admin UI: added Flask-Admin to manage Articles, Comments, Users, and Contact Submissions without touching code
+Authentication & Security:
+    - User login/logout with Flask-Login
+    - Password hashing with Werkzeug
+    - CSRF protection with Flask-WTF
+    - Secure session cookies in production
+Form Handling:
+    - Contact form submissions now stored in the database (ContactSubmission model)
+    - Accessible and manageable via Flask-Admin panel
+    - Comment forms on articles remain CSRF-protected
+    - Deployment: Render with Gunicorn and managed environment variables for sensitive configuration
+
+
+Database Design & Structure
+
+The project uses a PostgreSQL relational database hosted on Render.
+It was originally implemented with SQLite for the previous module (Flask), but was migrated to Postgres to support production use, multi-user access, and deployment.
+
+The database is managed through SQLAlchemy as the ORM and Flask-Migrate (Alembic). This allows database models in Python to be reflected in the actual database structure via migrations.
+
+Tables Overview
+Articles Table
+Stores all blog content. Each article has a unique slug for routing and includes metadata such as title, tag, summary, image path, author, publication date, and the full HTML content body.
+This enables dynamic rendering of article listings and detailed article pages.
+
+Comments Table
+Linked to articles through a foreign key (article_id). Each comment stores the commenter’s name, the comment text, and a timestamp.
+Comments are displayed under individual articles in chronological order, allowing interaction from site visitors.
+
+Users Table
+Stores login credentials for administrators. Each user has a unique email, a securely hashed password, and an is_admin flag.
+Passwords are never stored in plain text — they are hashed using Werkzeug security utilities.
+This table integrates with Flask-Login to handle authentication, protecting the admin panel from unauthorized access.
+
+Contact Submissions Table
+A new addition in this module, this table stores all messages submitted through the contact form. Each submission includes the sender’s name, email, message body, status (e.g., new/read/archived), and the submission timestamp. This provides a record of inquiries, which can be managed through the admin interface rather than being lost or only sent via email.
+
+Relationships
+- One Article can have many Comments (1-to-many).
+- Users are standalone, managing authentication, and not directly tied to articles or comments.
+- Contact Submissions are standalone entries created directly from public form input.
 
 Pages/Templates:
-index.html (likely homepage)
+index.html
+base.html
 about.html
 articles.html + article_detail.html
 projects.html
 contact.html
 tools.html
+404.html
+500.html
 
 Styling:
 CSS is modular (per-page CSS files + main.css and responsive.css).
@@ -62,33 +113,17 @@ Javascript:
 Page-specific scripts (e.g., about.js, articles.js, tools.js) indicate interactive components.
 
 Database: 
-This project uses SQL lite as the database engine and SQLAlchemy as the Object Relational Mapper. 
-Python integrates SQLAlchemy to manage the SQLite database used for storing articles and comments. Python classes define models like Article and Comment, which represent database tables. These models are queried directly within Python routes (e.g., Article.query.all()), demonstrating Python’s application in object-relational mapping (ORM). This allows for easy data retrieval, creation, and updates. 
-    
-    SQLite:
-    The database file is stored locally at instance/site.db.
+Postgres Database (blogportfolio):
 
-    SQLAlchemy:
-    Manages table creation, queries, and relationships in a Pythonic way.
-    Integrated with Flask using Flask-SQLAlchemy.
+- Article: stores title, slug, tag, summary, image, author, published_on, content
+- Comment: linked to Article via FK; stores name, content, created_at
+- User: authentication model with email, hashed password, is_admin flag
+- ContactSubmission: stores name, email, message, created_at, and status
 
-    How it's used in this project:
-    Articles:
-    Python script populate_articles.py is used to seed initial article data into the database
-    Articles.py is used to dynamically display articles on the Articles page and Featured Articles section on the homepage.
-    Includes fields like title, slug, tag, summary, image, author, published_on, and content.
-
-    Comments:
-    Implemented via a Comment model related to Article. 
-    When a user submits a comment form, Flask captures the data via a POST request, validates it in Python, and saves it into the database.
-    Allows users to post comments on individual articles.
-
-    ORM Features Used:
-    Table creation using db.create_all().
-
+Migrations are managed with Flask-Migrate (flask db migrate / flask db upgrade).
 
 Description of each page, sections and elements.
-1. Homepage (index.html)
+1 Homepage (index.html)
 1.1 Navigation Bar
 Elements:
 Logo (clickable, returns to homepage)
