@@ -32,11 +32,10 @@ if os.getenv("FLASK_ENV") == "production" or os.getenv("RENDER"):
 # --- DB setup ---
 db_url = os.getenv("DATABASE_URL") or os.getenv("LOCAL_DATABASE_URL")
 
-# Render/Heroku sometimes provide postgres:// which SQLAlchemy 2.x rejects
 if db_url and db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql+psycopg2://", 1)
 
-# Fallback so the app won’t crash if nothing is set (e.g. local dev)
+# Fallback 
 if not db_url:
     os.makedirs("instance", exist_ok=True)
     db_url = "sqlite:///instance/app.db"
