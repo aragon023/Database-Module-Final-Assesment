@@ -38,7 +38,7 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev")
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# --- Import models (AFTER db is ready) ---
+# --- Import models ---
 from models import Article, Comment, User, ContactSubmission
 
 # --- Auth & CSRF setup ---
