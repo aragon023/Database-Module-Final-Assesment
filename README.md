@@ -1,25 +1,30 @@
-Design and Developed by Mauricio Aragon Ramos
 
-UCD Full Stack Development Course
-Python Module - Final Assessment
 
->>Github Repository (link to page)
-https://github.com/aragon023/Python-Module-Final-Assesment.git
+Design and Developed by: Mauricio Aragon Ramos
+Course: UCD Full Stack Development Course
+Module: Databases - Final Assessment
 
->>Deployment in Render (link to page)
-https://python-module-final-assesment.onrender.com
+>>Github Repository 
+https://github.com/aragon023/Database-Module-Final-Assesment.git
 
-For accesing Admin Panel
+>>Deployment in Render 
+https://database-module-final-assesment-1.onrender.com
+
+>>Admin Panel Access
+- Use the login button in the navigation menu
+- Or go to: https://database-module-final-assesment-1.onrender.com/admin/login 
+
+>>Credentials
 User: admin@example.com 
 Password: NewStrongPass123!
 
-Planning Analysis Sheet
+>>Planning Analysis Sheet
 
-Website Goal
+I. Website Goal
 Goals: 
-Showcase My Work
-Demonstrate my professional experience and skills
-Present past projects, designs, articles, tools, and case studies.
+- Showcase My Work
+- Demonstrate my professional experience and skills
+- Present past projects, designs, articles, tools, and case studies.
 
 Establish Credibility & Personal Brand
 Communicate who I am, what I do, and what makes my work unique.
@@ -30,20 +35,21 @@ Attract Opportunities
 Generate freelance inquiries, collaborations, speaking gigs, etc.
 
 
-Website Page Structure and Information:
-Website and project requirements:
+II. Website Page Structure and Information:
+>>Website and project requirements:
 - General information and structure
 - Description of each page, sections and elements.
 - Final text per page
 - Responsive planning and analysis
 - Technology and Resources
 
-General information and structure:
-
+>>General information and structure:
 This project is built primarily with Python using the Flask framework to handle the backend logic, routing, and integration with the database. 
 Python is used to manage both the server-side application and data handling, making the site dynamic and interactive.
 
-Framework: Flask project (app.py as the entry point, templates/ folder for Jinja2 HTML templates, and static/ for CSS/JS/images).
+Framework: 
+Flask project (app.py as the entry point, templates/ folder for Jinja2 HTML templates, and static/ for CSS/JS/images).
+
 Flask powers the project’s backend. It is used to define routes (@app.route) that serve each page (e.g., Home, About, Projects, Articles, Tools, and Contact). 
 Through Flask's templating system (Jinja2), Python dynamically renders HTML templates, allowing content such as articles and featured sections to be fetched from the database and displayed on the site. This ensures that updates or new content are automatically reflected on the website without modifying static HTML files.
 
@@ -63,8 +69,9 @@ Form Handling:
     - Deployment: Render with Gunicorn and managed environment variables for sensitive configuration
 
 
-Database Design & Structure
+>>Database Design & Structure:
 
+Postgres Database (blogportfolio):
 The project uses a PostgreSQL relational database hosted on Render.
 It was originally implemented with SQLite for the previous module (Flask), but was migrated to Postgres to support production use, multi-user access, and deployment.
 
@@ -92,7 +99,9 @@ Relationships
 - Users are standalone, managing authentication, and not directly tied to articles or comments.
 - Contact Submissions are standalone entries created directly from public form input.
 
-Pages/Templates:
+Migrations are managed with Flask-Migrate (flask db migrate / flask db upgrade).
+
+>>Pages/Templates:
 index.html
 base.html
 about.html
@@ -103,24 +112,15 @@ tools.html
 404.html
 500.html
 
-Styling:
+>>Styling:
 CSS is modular (per-page CSS files + main.css and responsive.css).
 
-Assets:
+>>Assets:
 Dedicated folders for images (about, home, projects, etc.), videos, and icons.
 
-Javascript:
+>>Javascript:
 Page-specific scripts (e.g., about.js, articles.js, tools.js) indicate interactive components.
 
-Database: 
-Postgres Database (blogportfolio):
-
-- Article: stores title, slug, tag, summary, image, author, published_on, content
-- Comment: linked to Article via FK; stores name, content, created_at
-- User: authentication model with email, hashed password, is_admin flag
-- ContactSubmission: stores name, email, message, created_at, and status
-
-Migrations are managed with Flask-Migrate (flask db migrate / flask db upgrade).
 
 Description of each page, sections and elements.
 1 Homepage (index.html)
@@ -183,7 +183,7 @@ Contact email: contact@holisk.com
 Copyright
 Goal: Close the page with essential contact info and secondary navigation.
 
-Structure 
+>>Full Structure 
 
 ├── css/
 │   ├── main.css
@@ -230,7 +230,7 @@ Structure
 └── requirements.txt
 
 
-Responsive Design Analysis
+>>Responsive Design Analysis
 To ensure optimal user experience across devices, the website follows a mobile-first, responsive design approach. Layouts and components dynamically adapt based on screen size and device capabilities. The site is designed with three primary responsive breakpoints:
 
 1. Standard Tablet and Small Desktop (Max Width: ≤960px)
@@ -261,20 +261,20 @@ Key Adjustments:
 - Images may be hidden, replaced with icons, or resized to avoid horizontal scrolling.
 - Containers use 100vw and 100% width to eliminate overflow or clipping.
 
-Additional Notes
+>>Additional Notes
 - Media queries are used to adjust layout styles at each breakpoint:@media (max-width: 860px), 600px, 400px).
 - Flexbox and CSS Grid are leveraged to create fluid layouts that respond to changes in screen dimensions.
 - Image assets use the loading = "lazy" attribute and max-width: 100% for performance and fluid scaling.
 - Design is tested on both physical devices and emulators to ensure fidelity across operating systems and browsers.
 
-Technology and Resources
+>>Technology and Resources
 Technology:
 - Flask, Python, HTML5, CSS3, JavaScript 
 - Google Fonts and Icons
 - Responsive media queries
 - Render for Deployment
 
-Resources:
+>>Resources:
 List of sources (facts, text, graphics, sound, video) you will use in the pages above
 Additional sources - Text has been described in the section above. 
 
