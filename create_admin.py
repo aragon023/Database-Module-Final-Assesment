@@ -3,24 +3,14 @@ from models import User
 
 def main():
     with app.app_context():
-        email = "admin@example.com"       
-        password = "NewStrongPass123!"     
-        name = "Admin User"
+        email = input("Enter admin email: ").strip()
+        password = getpass("Enter admin password: ")
 
-        # check if user exists
-        user = User.query.filter_by(email=email).first()
-        if not user:
-            user = User(email=email, name=name, is_admin=True)
-            user.set_password(password)  
-            db.session.add(user)
-            print("Created new admin user")
-        else:
-            user.is_admin = True
-            user.set_password(password)
-            print("Updated existing user to admin")
-
+        user = User(email=email, is_admin=True)
+        user.set_password(password)  
+        db.session.add(user)
         db.session.commit()
-        print(f"Admin user ready: {email} / {password}")
+        print(f"Admin user {email} created successfully.")
 
 if __name__ == "__main__":
     main()
