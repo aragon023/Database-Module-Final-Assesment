@@ -1,3 +1,4 @@
+from getpass import getpass
 from app import app, db
 from models import User
 
@@ -7,7 +8,7 @@ def main():
         password = getpass("Enter admin password: ")
 
         user = User(email=email, is_admin=True)
-        user.set_password(password)  
+        user.set_password(password)  # assuming your User model has this method
         db.session.add(user)
         db.session.commit()
         print(f"Admin user {email} created successfully.")
