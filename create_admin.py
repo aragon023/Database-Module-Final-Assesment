@@ -8,7 +8,7 @@ def main():
         password = getpass("Enter admin password: ")
 
         user = User(email=email, is_admin=True)
-        user.set_password(password)  # assuming your User model has this method
+        user.set_password(password)  
         db.session.add(user)
         db.session.commit()
         print(f"Admin user {email} created successfully.")
